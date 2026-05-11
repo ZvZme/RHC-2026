@@ -114,9 +114,9 @@ const mkPlayers = () => {
       name,
       team: team.id,
       payments: [
-        { amount: "", paid: false },
-        { amount: "", paid: false },
-        { amount: "", paid: false },
+        { amount: "4000", paid: false },
+        { amount: "4000", paid: false },
+        { amount: "4000", paid: false },
       ],
     }))
   );
@@ -142,7 +142,7 @@ function App() {
   const [players, setPlayers] = useState(mkPlayers);
   const [editName, setEditName] = useState(null);
   const [payLabels, setPayLabels] = useState(["Payment 1", "Payment 2", "Payment 3"]);
-  const [payDates, setPayDates] = useState(["", "", ""]);
+  const [payDates, setPayDates] = useState(["2026-05-31", "2026-06-30", "2026-08-31"]);
 
   const effPP = (item) => item.actual !== null ? item.actual : (item.est || 0);
   const totalPP = cats.flatMap(c => c.items).reduce((s, i) => s + effPP(i), 0);
