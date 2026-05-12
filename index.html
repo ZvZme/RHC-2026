@@ -1,565 +1,543 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nelspruit Golf Trip 2026</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #0f1a0f; font-family: Georgia, serif; color: #e8e0d0; }
-    input:focus { outline: 2px solid #4a7a3a; border-color: #4a7a3a; }
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #0d1a0d; }
-    ::-webkit-scrollbar-thumb { background: #2a4a2a; border-radius: 3px; }
-    input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.5); }
-    @media (max-width: 700px) {
-      .notes-col { display: none !important; }
-      .budget-row { grid-template-columns: 1fr 80px 80px 90px !important; }
-      .pills { flex-direction: column; }
-      .pay-grid { grid-template-columns: 1fr !important; }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nelspruit Golf Trip 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f1a0f;font-family:Arial,sans-serif;color:#e8e0d0;min-height:100vh}
+input{background:#0a120a;border:1px solid #2a3a2a;border-radius:5px;color:#c0d8a0;padding:6px 8px;font-size:13px;font-family:monospace;width:100%}
+input:focus{outline:2px solid #4a7a3a}
+button{cursor:pointer;font-family:Arial,sans-serif}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#0d1a0d}
+::-webkit-scrollbar-thumb{background:#2a4a2a;border-radius:3px}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#1a2e1a 0%,#0f1a0f 60%,#1c2a10 100%);border-bottom:2px solid #2d4a2d;padding:28px 20px 20px}
+.header-inner{max-width:960px;margin:0 auto}
+.trip-label{font-size:11px;letter-spacing:3px;color:#6a9a4a;text-transform:uppercase;font-family:monospace;margin-bottom:6px}
+.trip-title{font-size:28px;color:#f0e8d0;margin-bottom:4px;font-weight:normal}
+.trip-sub{font-size:13px;color:#8aaa6a;margin-bottom:20px}
+.budget-bar-wrap{background:#0d160d;border-radius:8px;padding:14px 18px;border:1px solid #2a3a2a;margin-bottom:14px}
+.budget-bar-top{display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px}
+.budget-bar-label{color:#9aaa8a}
+.budget-bar-val{font-family:monospace;font-size:15px;font-weight:bold}
+.budget-bar-track{background:#1a2a1a;border-radius:4px;height:8px;overflow:hidden}
+.budget-bar-fill{height:100%;border-radius:4px;transition:width 0.4s}
+.budget-bar-marks{display:flex;justify-content:space-between;margin-top:5px;font-size:10px;color:#5a7a5a;font-family:monospace}
+.pills{display:flex;gap:10px;flex-wrap:wrap}
+.pill{background:#162216;border:1px solid #2a3a2a;border-radius:8px;padding:10px 14px;flex:1;min-width:130px}
+.pill-label{font-size:10px;color:#6a8a5a;text-transform:uppercase;letter-spacing:1px}
+.pill-val{font-size:15px;font-family:monospace;color:#d0e8c0;margin-top:2px}
+.pill-sub{font-size:10px;color:#4a6a4a;margin-top:2px}
+
+/* TABS */
+.tabs{max-width:960px;margin:0 auto;padding:0 20px}
+.tab-bar{display:flex;border-bottom:1px solid #2a3a2a}
+.tab-btn{background:none;border:none;padding:14px 20px;font-size:14px;color:#5a7a5a;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.2s;font-family:Arial,sans-serif}
+.tab-btn.active{color:#8ade60;border-bottom-color:#8ade60}
+.tab-content{display:none;padding:20px 0}
+.tab-content.active{display:block}
+
+/* BUDGET */
+.section-note{font-size:12px;color:#5a7a5a;margin-bottom:18px}
+.cat-block{margin-bottom:22px;background:#0d1a0d;border-radius:10px;border:1px solid #2a3a2a;overflow:hidden}
+.cat-head{background:#142014;padding:12px 18px;display:flex;justify-content:space-between;align-items:center}
+.cat-head-left{display:flex;align-items:center;gap:8px}
+.cat-icon{font-size:15px}
+.cat-name{font-size:14px;color:#c0d8a0;font-weight:bold}
+.cat-desc{font-size:11px;color:#5a7a5a;margin-left:6px}
+.cat-est{font-family:monospace;font-size:12px;color:#8aaa6a}
+.col-heads{display:grid;grid-template-columns:1fr 100px 100px 110px;gap:6px;padding:8px 12px;font-size:10px;color:#4a6a4a;text-transform:uppercase;letter-spacing:1px}
+.item-row{display:grid;grid-template-columns:1fr 100px 100px 110px;gap:6px;padding:7px 12px;align-items:center;border-top:1px solid #1a2a1a}
+.item-label{font-size:12px;color:#a0b890}
+.item-total{font-family:monospace;font-size:12px;color:#8aaa6a;text-align:right}
+.section-total-row{display:grid;grid-template-columns:1fr 100px 100px 110px;gap:6px;padding:9px 12px;background:#0a120a;border-top:2px solid #2a4a2a}
+.st-label{font-size:10px;color:#6a9a4a;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center}
+.st-est{font-family:monospace;font-size:12px;color:#6a8a5a;display:flex;align-items:center;justify-content:flex-end}
+.st-act{font-family:monospace;font-size:12px;color:#8ade60;display:flex;align-items:center;justify-content:flex-end}
+.st-total{font-family:monospace;font-size:12px;color:#8aaa6a;display:flex;align-items:center;justify-content:flex-end}
+.grand-total{background:#142014;border:1px solid #3a5a2a;border-radius:10px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center}
+.gt-label{font-size:12px;color:#6a8a5a;text-transform:uppercase;letter-spacing:1px}
+.gt-sub{font-size:10px;color:#4a6a4a;margin-top:3px}
+.gt-val{font-size:26px;font-family:monospace;font-weight:bold}
+.gt-group{font-size:11px;color:#5a7a5a;margin-top:2px}
+
+/* KITTY */
+.pay-schedule{background:#0d1a0d;border:1px solid #2a3a2a;border-radius:10px;padding:14px 18px;margin-bottom:18px}
+.pay-schedule-title{font-size:10px;color:#5a7a5a;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.pay-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pay-slot{background:#0a120a;border:1px solid #2a3a2a;border-radius:8px;padding:10px}
+.pay-slot-label-head{font-size:9px;color:#4a6a4a;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+.pay-slot input{margin-bottom:8px}
+.progress-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.prog-card{background:#0d1a0d;border:1px solid #2a3a2a;border-radius:8px;padding:11px 13px}
+.prog-top{display:flex;justify-content:space-between;margin-bottom:5px}
+.prog-name{font-size:12px;color:#8ade60}
+.prog-count{font-size:12px;color:#6a8a5a;font-family:monospace}
+.prog-track{background:#1a2a1a;border-radius:4px;height:5px;overflow:hidden}
+.prog-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#2a7a3a,#4ade80);transition:width 0.3s}
+.prog-date{font-size:9px;color:#4a6a4a;margin-top:5px;font-family:monospace}
+.kitty-stats{display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap}
+.kstat{background:#0d1a0d;border:1px solid #2a3a2a;border-radius:8px;padding:11px 14px;flex:1;min-width:110px}
+.kstat-label{font-size:9px;color:#5a7a5a;text-transform:uppercase;letter-spacing:1px}
+.kstat-val{font-size:17px;font-family:monospace;margin-top:3px}
+.team-section{margin-bottom:26px}
+.team-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;margin-bottom:8px}
+.team-header-left{display:flex;align-items:center;gap:8px}
+.team-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.team-name-label{font-size:14px;font-weight:bold}
+.team-stats{display:flex;gap:18px}
+.tstat{text-align:right}
+.tstat-label{font-size:9px;color:#8a9a8a;text-transform:uppercase;letter-spacing:1px}
+.tstat-val{font-family:monospace;font-size:13px}
+.player-card{background:#0d1a0d;border:1px solid #2a3a2a;border-radius:10px;padding:12px 14px;margin-bottom:8px}
+.player-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.player-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.player-name{font-size:13px;font-weight:bold;color:#c0d8a0;flex:1}
+.player-collected{font-family:monospace;font-size:11px;color:#6a8a5a;white-space:nowrap}
+.payment-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.pay-card{border-radius:7px;padding:9px}
+.pay-card-label{font-size:9px;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px}
+.pay-card-amount{font-family:monospace;font-size:14px;margin-bottom:4px}
+.pay-card-date{font-size:9px;color:#4a6a4a;margin-bottom:7px;font-family:monospace}
+.mark-paid-btn{width:100%;padding:6px 0;border-radius:5px;font-size:11px;font-family:monospace;transition:all 0.2s}
+
+/* SUMMARY */
+.summary-table{width:100%;border-collapse:collapse;font-family:monospace;font-size:13px}
+.summary-table th{text-align:right;padding:6px 8px;font-weight:normal;font-size:10px;color:#5a7a5a;text-transform:uppercase;letter-spacing:1px}
+.summary-table th:first-child{text-align:left}
+.summary-table td{padding:9px 8px;border-top:1px solid #1a2a1a}
+.summary-table td:first-child{color:#a0b890;text-align:left}
+.summary-table td:not(:first-child){text-align:right}
+.summary-grand td{border-top:2px solid #3a5a2a;font-weight:bold}
+.check-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a2a1a;font-size:12px}
+.itin-row{display:flex;gap:14px;padding:6px 0;border-bottom:1px solid #1a2a1a;font-size:12px}
+.itin-day{color:#6a9a4a;font-family:monospace;min-width:90px}
+.itin-plan{color:#a0b890}
+.card-block{background:#0a120a;border-radius:8px;padding:13px 15px;border:1px solid #2a3a2a;margin-top:14px}
+.card-block-title{font-size:10px;color:#5a7a5a;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+
+@media(max-width:600px){
+  .col-heads,.item-row,.section-total-row{grid-template-columns:1fr 85px 85px!important}
+  .item-total,.st-total{display:none}
+  .pay-grid,.progress-grid,.payment-slots{grid-template-columns:1fr!important}
+  .pills,.kitty-stats{flex-direction:column}
+  .team-stats{flex-direction:column;gap:4px}
+}
+</style>
 </head>
 <body>
-<div id="root"></div>
-<script type="text/babel">
 
-const { useState } = React;
-const PEOPLE = 20;
-const MAX_PP = 12000;
-
-const INIT_CATEGORIES = [
-  {
-    id: "accommodation", label: "Accommodation", icon: "🏨", desc: "4 nights | Sabi River Sun",
-    items: [
-      { id: "acc1", label: "Sabi River Sun — 4 nights (Wed-Sun)", est: 3200, actual: 4794, notes: "CONFIRMED | R95,880 / 20 pax" },
-      { id: "acc2", label: "Deposit / booking fee", est: 0, actual: 0, notes: "Included in total" },
-    ],
-  },
-  {
-    id: "golf", label: "Golf", icon: "⛳", desc: "3 rounds",
-    items: [
-      { id: "g1", label: "Round 1 — White River CC (Thu 22 Oct) | Green fees", est: 460, actual: 460, notes: "CONFIRMED | 10:15 tee-off" },
-      { id: "g2", label: "Round 1 — White River CC (Thu 22 Oct) | Cart", est: 250, actual: 250, notes: "CONFIRMED" },
-      { id: "g3", label: "Round 2 — Kambaku (Fri 23 Oct) | Green fees", est: 550, actual: 550, notes: "CONFIRMED | 11:15 tee-off" },
-      { id: "g4", label: "Round 2 — Kambaku (Fri 23 Oct) | Cart", est: 260, actual: 260, notes: "CONFIRMED" },
-      { id: "g5", label: "Round 3 — Mbombela (Sat 24 Oct) | Green fees", est: 400, actual: 400, notes: "CONFIRMED | 11:15 tee-off" },
-      { id: "g6", label: "Round 3 — Mbombela (Sat 24 Oct) | Cart", est: 225, actual: 225, notes: "CONFIRMED" },
-    ],
-  },
-  {
-    id: "transport", label: "Ground Transport", icon: "🚌", desc: "Airport transfers + daily movement",
-    items: [
-      { id: "t1", label: "Airport transfers (in & out)", est: 400, actual: null, notes: "Bus / shuttle for 20" },
-      { id: "t2", label: "Daily transport to courses", est: 600, actual: null, notes: "3 days x bus hire" },
-    ],
-  },
-  {
-    id: "food", label: "Food & Drinks", icon: "🍽️", desc: "Group kitty — 4 days",
-    items: [
-      { id: "f1", label: "Dinners (4 evenings)", est: 1000, actual: null, notes: "~R250pp per dinner" },
-      { id: "f2", label: "Breakfast (4 days)", est: 400, actual: null, notes: "~R100pp per day" },
-      { id: "f3", label: "Drinks after the round (3 days)", est: 500, actual: null, notes: "Est. R500pp" },
-      { id: "f4", label: "Drinks / bar kitty (evenings)", est: 2000, actual: null, notes: "Estimate — adjust as needed" },
-    ],
-  },
-  {
-    id: "activities", label: "Activities", icon: "🦁", desc: "Game drive — Wed 21 Oct",
-    items: [
-      { id: "a1", label: "Game drive — guided (Wed 21 Oct)", est: 1000, actual: null, notes: "UNDECIDED — reserve and format TBC" },
-    ],
-  },
-  {
-    id: "extras", label: "Extras & Contingency", icon: "🏆", desc: "Kit, contingency",
-    items: [
-      { id: "e1", label: "Team kit — 3 shirts pp (different colour per round)", est: 1500, actual: null, notes: "Mid-range est. R500/shirt | supplier TBC" },
-      { id: "e2", label: "Contingency buffer", est: 300, actual: null, notes: "~3% buffer — do not remove" },
-    ],
-  },
-];
-
-const TEAMS = [
-  {
-    id: "blue",
-    label: "Blue Team",
-    color: "#3b82f6",
-    dimColor: "#1e3a5f",
-    borderColor: "#2563eb",
-    players: [
-      "Andrew Pretorius", "David Snyman", "Emil Krugmann", "Harry Steyn", "Lucas Steyn",
-      "Phil Davidson", "Phil Wessels", "Rentzke Smook", "Ryan Theron", "Zac van Zyl",
-    ],
-  },
-  {
-    id: "red",
-    label: "Red Team",
-    color: "#ef4444",
-    dimColor: "#5f1e1e",
-    borderColor: "#dc2626",
-    players: [
-      "Brink van Zyl", "Douw Krugmann", "Eben Heunis", "Francois Wessels", "Hennie van Niekerk",
-      "Hennie van Staden", "Pierre Janse van Rensburg", "Tiaan Hatting", "Wim de Beer", "Wimpie van der Meijden",
-    ],
-  },
-];
-
-const mkPlayers = () => {
-  let id = 1;
-  return TEAMS.flatMap(team =>
-    team.players.map(name => ({
-      id: id++,
-      name,
-      team: team.id,
-      payments: [
-        { amount: "4000", paid: false },
-        { amount: "4000", paid: false },
-        { amount: "4000", paid: false },
-      ],
-    }))
-  );
-};
-
-const rnd = (n) => (n === null || n === undefined || n === "") ? "-" : "R " + Number(n).toLocaleString("en-ZA");
-const barColor = (pct) => pct <= 85 ? "#4ade80" : pct <= 100 ? "#facc15" : "#f87171";
-const fmtDate = (d) => {
-  if (!d) return null;
-  try { return new Date(d + "T00:00:00").toLocaleDateString("en-ZA", { day: "numeric", month: "short", year: "numeric" }); }
-  catch(e) { return d; }
-};
-
-const IS = {
-  background: "#0a120a", border: "1px solid #2a3a2a", borderRadius: "5px",
-  color: "#c0d8a0", padding: "6px 8px", fontSize: "13px",
-  fontFamily: "monospace", width: "100%",
-};
-
-function App() {
-  const [cats, setCats] = useState(INIT_CATEGORIES);
-  const [tab, setTab] = useState("budget");
-  const [players, setPlayers] = useState(mkPlayers);
-  const [editName, setEditName] = useState(null);
-  const [payLabels, setPayLabels] = useState(["Payment 1", "Payment 2", "Payment 3"]);
-  const [payDates, setPayDates] = useState(["2026-05-31", "2026-06-30", "2026-08-31"]);
-
-  const effPP = (item) => item.actual !== null ? item.actual : (item.est || 0);
-  const totalPP = cats.flatMap(c => c.items).reduce((s, i) => s + effPP(i), 0);
-  const totalEstPP = cats.flatMap(c => c.items).reduce((s, i) => s + (i.est || 0), 0);
-  const pct = Math.round((totalPP / MAX_PP) * 100);
-  const bColor = barColor(pct);
-
-  const totalCollected = players.reduce((s, p) =>
-    s + p.payments.reduce((ps, pay) => ps + (pay.paid && pay.amount !== "" ? Number(pay.amount) : 0), 0), 0);
-  const totalExpected = players.reduce((s, p) =>
-    s + p.payments.reduce((ps, pay) => ps + (pay.amount !== "" ? Number(pay.amount) : 0), 0), 0);
-  const fullyPaid = players.filter(p => p.payments.every(pay => pay.paid)).length;
-
-  const updItem = (catId, itemId, field, val) => {
-    setCats(prev => prev.map(c => c.id !== catId ? c : {
-      ...c,
-      items: c.items.map(it => it.id !== itemId ? it : {
-        ...it, [field]: val === "" ? null : (field === "notes" ? val : Number(val))
-      })
-    }));
-  };
-
-  const updLabel = (i, val) => {
-    setPayLabels(prev => { const n = [...prev]; n[i] = val; return n; });
-  };
-
-  const updDate = (i, val) => {
-    setPayDates(prev => { const n = [...prev]; n[i] = val; return n; });
-  };
-
-  const updPayAmt = (pid, pi, val) => {
-    setPlayers(prev => prev.map(p => p.id !== pid ? p : {
-      ...p,
-      payments: p.payments.map((pay, i) => i !== pi ? pay : { ...pay, amount: val })
-    }));
-  };
-
-  const togglePaid = (pid, pi) => {
-    setPlayers(prev => prev.map(p => p.id !== pid ? p : {
-      ...p,
-      payments: p.payments.map((pay, i) => i !== pi ? pay : { ...pay, paid: !pay.paid })
-    }));
-  };
-
-  const renamePlayer = (id, name) => {
-    setPlayers(prev => prev.map(p => p.id !== id ? p : { ...p, name: name || p.name }));
-    setEditName(null);
-  };
-
-  return (
-    <div style={{ minHeight: "100vh", background: "#0f1a0f" }}>
-
-      {/* HEADER */}
-      <div style={{ background: "linear-gradient(135deg,#1a2e1a 0%,#0f1a0f 60%,#1c2a10 100%)", borderBottom: "2px solid #2d4a2d", padding: "32px 24px 24px", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: 0, right: 0, width: "300px", height: "300px", background: "radial-gradient(circle,rgba(74,124,44,0.15) 0%,transparent 70%)", pointerEvents: "none" }} />
-        <div style={{ maxWidth: "960px", margin: "0 auto" }}>
-          <p style={{ fontSize: "11px", letterSpacing: "3px", color: "#6a9a4a", textTransform: "uppercase", fontFamily: "monospace", marginBottom: "6px" }}>GOLF TRIP PLANNER</p>
-          <h1 style={{ fontSize: "32px", fontWeight: "normal", color: "#f0e8d0", marginBottom: "4px" }}>Nelspruit 2026</h1>
-          <p style={{ fontSize: "14px", color: "#8aaa6a", letterSpacing: "1px", marginBottom: "24px" }}>21 - 25 October &nbsp;|&nbsp; 20 players &nbsp;|&nbsp; 3 rounds &nbsp;|&nbsp; Sabi River Sun</p>
-
-          <div style={{ background: "#0d160d", borderRadius: "8px", padding: "16px 20px", border: "1px solid #2a3a2a", marginBottom: "16px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px", fontSize: "13px" }}>
-              <span style={{ color: "#9aaa8a" }}>Current spend per person (excl. flights)</span>
-              <span style={{ color: bColor, fontWeight: "bold", fontFamily: "monospace", fontSize: "16px" }}>{rnd(totalPP)}</span>
-            </div>
-            <div style={{ background: "#1a2a1a", borderRadius: "4px", height: "8px", overflow: "hidden" }}>
-              <div style={{ height: "100%", borderRadius: "4px", width: Math.min(pct, 100) + "%", background: "linear-gradient(90deg,#4ade80," + bColor + ")", transition: "width 0.4s" }} />
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between", marginTop: "6px", fontSize: "11px", color: "#5a7a5a", fontFamily: "monospace" }}>
-              <span>R 0</span><span style={{ color: "#7aaa5a" }}>TARGET R10,000 - R12,000</span><span>R 12,000</span>
-            </div>
-          </div>
-
-          <div className="pills" style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-            {[
-              { label: "Spend pp", val: rnd(totalPP), sub: "actuals where confirmed" },
-              { label: "Group total", val: rnd(totalPP * PEOPLE), sub: "x 20 players" },
-              { label: totalPP <= MAX_PP ? "Headroom" : "Over budget", val: rnd(Math.abs(MAX_PP - totalPP) * PEOPLE), sub: "vs R12,000 ceiling" },
-              { label: "Kitty collected", val: rnd(totalCollected), sub: fullyPaid + " of 20 fully paid" },
-            ].map(function(p) { return (
-              <div key={p.label} style={{ background: "#162216", border: "1px solid #2a3a2a", borderRadius: "8px", padding: "10px 16px", flex: "1", minWidth: "140px" }}>
-                <div style={{ fontSize: "10px", color: "#6a8a5a", textTransform: "uppercase", letterSpacing: "1px" }}>{p.label}</div>
-                <div style={{ fontSize: "16px", fontFamily: "monospace", color: "#d0e8c0", marginTop: "2px" }}>{p.val}</div>
-                <div style={{ fontSize: "10px", color: "#4a6a4a", marginTop: "2px" }}>{p.sub}</div>
-              </div>
-            ); })}
-          </div>
-        </div>
+<div class="header">
+  <div class="header-inner">
+    <div class="trip-label">Golf Trip Planner</div>
+    <div class="trip-title">Nelspruit 2026</div>
+    <div class="trip-sub">21 – 25 October &nbsp;|&nbsp; 20 Players &nbsp;|&nbsp; 3 Rounds &nbsp;|&nbsp; Sabi River Sun</div>
+    <div class="budget-bar-wrap">
+      <div class="budget-bar-top">
+        <span class="budget-bar-label">Current spend per person (excl. flights)</span>
+        <span class="budget-bar-val" id="hdr-total">—</span>
       </div>
-
-      {/* TABS */}
-      <div style={{ maxWidth: "960px", margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ display: "flex", borderBottom: "1px solid #2a3a2a" }}>
-          {[{ id: "budget", label: "💰 Budget" }, { id: "kitty", label: "🤝 Kitty Tracker" }, { id: "summary", label: "📋 Summary" }].map(function(t) { return (
-            <button key={t.id} onClick={() => setTab(t.id)} style={{
-              background: "none", border: "none", cursor: "pointer", padding: "16px 24px", fontSize: "14px",
-              color: tab === t.id ? "#8ade60" : "#5a7a5a",
-              borderBottom: tab === t.id ? "2px solid #8ade60" : "2px solid transparent",
-              marginBottom: "-1px", transition: "all 0.2s", fontFamily: "Georgia, serif",
-            }}>{t.label}</button>
-          ); })}
-        </div>
-
-        {/* BUDGET TAB */}
-        {tab === "budget" && (
-          <div style={{ padding: "24px 0" }}>
-            <p style={{ marginBottom: "20px", fontSize: "13px", color: "#5a7a5a" }}>Enter actual costs as confirmed. Estimated figures are the planning baseline.</p>
-            {cats.map(function(cat) {
-              const catEst = cat.items.reduce((s, i) => s + (i.est || 0), 0);
-              const catAct = cat.items.reduce((s, i) => s + effPP(i), 0);
-              return (
-                <div key={cat.id} style={{ marginBottom: "24px", background: "#0d1a0d", borderRadius: "10px", border: "1px solid #2a3a2a", overflow: "hidden" }}>
-                  <div style={{ background: "#142014", padding: "14px 20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <div>
-                      <span style={{ fontSize: "16px", marginRight: "10px" }}>{cat.icon}</span>
-                      <span style={{ fontSize: "15px", color: "#c0d8a0", fontWeight: "bold" }}>{cat.label}</span>
-                      <span style={{ fontSize: "12px", color: "#5a7a5a", marginLeft: "10px" }}>{cat.desc}</span>
-                    </div>
-                    <span style={{ fontFamily: "monospace", fontSize: "13px", color: "#8aaa6a" }}>{rnd(catEst)} <span style={{ color: "#4a6a4a", fontSize: "11px" }}>est.</span></span>
-                  </div>
-                  <div style={{ padding: "0 8px" }}>
-                    <div className="budget-row" style={{ display: "grid", gridTemplateColumns: "1fr 110px 110px 110px 160px", gap: "8px", padding: "8px 12px", fontSize: "10px", color: "#4a6a4a", textTransform: "uppercase", letterSpacing: "1px" }}>
-                      <span>Item</span><span>Est. (pp)</span><span>Actual (pp)</span><span>Total (x20)</span><span className="notes-col">Notes</span>
-                    </div>
-                    {cat.items.map(function(item) {
-                      const display = effPP(item);
-                      return (
-                        <div key={item.id} className="budget-row" style={{ display: "grid", gridTemplateColumns: "1fr 110px 110px 110px 160px", gap: "8px", padding: "8px 12px", alignItems: "center", borderTop: "1px solid #1a2a1a" }}>
-                          <span style={{ fontSize: "13px", color: "#a0b890" }}>{item.label}</span>
-                          <input type="number" value={item.est ?? ""} onChange={e => updItem(cat.id, item.id, "est", e.target.value)} style={IS} placeholder="0" />
-                          <input type="number" value={item.actual ?? ""} onChange={e => updItem(cat.id, item.id, "actual", e.target.value)} style={{ ...IS, borderColor: item.actual !== null ? "#4a7a3a" : "#2a3a2a" }} placeholder="-" />
-                          <div style={{ fontFamily: "monospace", fontSize: "13px", color: "#8aaa6a", textAlign: "right" }}>{display ? "R " + (display * 20).toLocaleString("en-ZA") : "-"}</div>
-                          <input className="notes-col" type="text" value={item.notes} onChange={e => updItem(cat.id, item.id, "notes", e.target.value)} style={{ ...IS, fontSize: "11px", color: "#6a8a5a" }} placeholder="Note..." />
-                        </div>
-                      );
-                    })}
-                    <div className="budget-row" style={{ display: "grid", gridTemplateColumns: "1fr 110px 110px 110px 160px", gap: "8px", padding: "10px 12px", background: "#0a120a", borderTop: "2px solid #2a4a2a" }}>
-                      <div style={{ fontSize: "11px", color: "#6a9a4a", textTransform: "uppercase", letterSpacing: "1px", display: "flex", alignItems: "center" }}>Section total</div>
-                      <div style={{ fontFamily: "monospace", fontSize: "13px", color: "#6a8a5a", display: "flex", alignItems: "center", justifyContent: "flex-end" }}>R {catEst.toLocaleString("en-ZA")}</div>
-                      <div style={{ fontFamily: "monospace", fontSize: "13px", color: "#8ade60", display: "flex", alignItems: "center", justifyContent: "flex-end" }}>R {catAct.toLocaleString("en-ZA")}</div>
-                      <div style={{ fontFamily: "monospace", fontSize: "13px", color: "#8aaa6a", display: "flex", alignItems: "center", justifyContent: "flex-end" }}>R {(catAct * 20).toLocaleString("en-ZA")}</div>
-                      <div className="notes-col" />
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-            <div style={{ background: "#142014", border: "1px solid #3a5a2a", borderRadius: "10px", padding: "20px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <div>
-                <div style={{ fontSize: "13px", color: "#6a8a5a", textTransform: "uppercase", letterSpacing: "1px" }}>Total per person (excl. flights)</div>
-                <div style={{ fontSize: "11px", color: "#4a6a4a", marginTop: "4px" }}>Actuals used where confirmed</div>
-              </div>
-              <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: "28px", fontFamily: "monospace", color: bColor, fontWeight: "bold" }}>{rnd(totalPP)}</div>
-                <div style={{ fontSize: "12px", color: "#5a7a5a", marginTop: "2px" }}>Group total: {rnd(totalPP * PEOPLE)}</div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* KITTY TRACKER TAB */}
-        {tab === "kitty" && (
-          <div style={{ padding: "24px 0" }}>
-
-            {/* Payment schedule setup */}
-            <div style={{ background: "#0d1a0d", border: "1px solid #2a3a2a", borderRadius: "10px", padding: "16px 20px", marginBottom: "20px" }}>
-              <div style={{ fontSize: "11px", color: "#5a7a5a", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "14px" }}>Payment Schedule — set labels and due dates</div>
-              <div className="pay-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "12px" }}>
-                {[0, 1, 2].map(function(i) { return (
-                  <div key={i} style={{ background: "#0a120a", border: "1px solid #2a3a2a", borderRadius: "8px", padding: "12px" }}>
-                    <div style={{ fontSize: "10px", color: "#4a6a4a", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "6px" }}>Label</div>
-                    <input
-                      type="text"
-                      value={payLabels[i]}
-                      onChange={e => updLabel(i, e.target.value)}
-                      style={{ ...IS, color: "#8ade60", fontWeight: "bold", marginBottom: "10px" }}
-                      placeholder={"Payment " + (i + 1)}
-                    />
-                    <div style={{ fontSize: "10px", color: "#4a6a4a", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "6px" }}>Due date</div>
-                    <input
-                      type="date"
-                      value={payDates[i]}
-                      onChange={e => updDate(i, e.target.value)}
-                      style={{ ...IS, colorScheme: "dark" }}
-                    />
-                  </div>
-                ); })}
-              </div>
-            </div>
-
-            {/* Progress bars */}
-            <div className="pay-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "12px", marginBottom: "20px" }}>
-              {[0, 1, 2].map(function(i) {
-                const paidCount = players.filter(p => p.payments[i].paid).length;
-                return (
-                  <div key={i} style={{ background: "#0d1a0d", border: "1px solid #2a3a2a", borderRadius: "8px", padding: "12px 14px" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
-                      <span style={{ fontSize: "12px", color: "#8ade60" }}>{payLabels[i]}</span>
-                      <span style={{ fontSize: "12px", color: "#6a8a5a", fontFamily: "monospace" }}>{paidCount}/20</span>
-                    </div>
-                    <div style={{ background: "#1a2a1a", borderRadius: "4px", height: "5px", overflow: "hidden" }}>
-                      <div style={{ height: "100%", borderRadius: "4px", width: ((paidCount / 20) * 100) + "%", background: "linear-gradient(90deg,#2a7a3a,#4ade80)", transition: "width 0.3s" }} />
-                    </div>
-                    {payDates[i] && (
-                      <div style={{ fontSize: "10px", color: "#4a6a4a", marginTop: "6px", fontFamily: "monospace" }}>Due: {fmtDate(payDates[i])}</div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Summary stats */}
-            <div className="pills" style={{ display: "flex", gap: "12px", marginBottom: "24px", flexWrap: "wrap" }}>
-              {[
-                { label: "Total collected", val: rnd(totalCollected), color: "#4ade80" },
-                { label: "Total expected", val: rnd(totalExpected), color: "#c0d8a0" },
-                { label: "Outstanding", val: rnd(totalExpected - totalCollected), color: (totalExpected - totalCollected) > 0 ? "#f87171" : "#4ade80" },
-                { label: "Blue Team paid", val: players.filter(function(p){return p.team==="blue" && p.payments.every(function(pay){return pay.paid;});}).length + " / 10", color: "#3b82f6" },
-              { label: "Red Team paid", val: players.filter(function(p){return p.team==="red" && p.payments.every(function(pay){return pay.paid;});}).length + " / 10", color: "#ef4444" },
-              ].map(function(s) { return (
-                <div key={s.label} style={{ background: "#0d1a0d", border: "1px solid #2a3a2a", borderRadius: "8px", padding: "12px 16px", flex: "1", minWidth: "120px" }}>
-                  <div style={{ fontSize: "10px", color: "#5a7a5a", textTransform: "uppercase", letterSpacing: "1px" }}>{s.label}</div>
-                  <div style={{ fontSize: "18px", fontFamily: "monospace", color: s.color, marginTop: "4px" }}>{s.val}</div>
-                </div>
-              ); })}
-            </div>
-
-            {/* Player list by team */}
-            {TEAMS.map(function(team) {
-              const teamPlayers = players.filter(function(p) { return p.team === team.id; });
-              const teamCollected = teamPlayers.reduce(function(s, p) {
-                return s + p.payments.reduce(function(ps, pay) { return ps + (pay.paid && pay.amount !== "" ? Number(pay.amount) : 0); }, 0);
-              }, 0);
-              const teamFullyPaid = teamPlayers.filter(function(p) { return p.payments.every(function(pay) { return pay.paid; }); }).length;
-              return (
-                <div key={team.id} style={{ marginBottom: "28px" }}>
-                  {/* Team header */}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 16px", background: team.dimColor, border: "1px solid " + team.borderColor, borderRadius: "10px", marginBottom: "10px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                      <div style={{ width: "12px", height: "12px", borderRadius: "50%", background: team.color, flexShrink: 0 }} />
-                      <span style={{ fontSize: "15px", fontWeight: "bold", color: team.color, letterSpacing: "0.5px" }}>{team.label}</span>
-                    </div>
-                    <div style={{ display: "flex", gap: "20px" }}>
-                      <div style={{ textAlign: "right" }}>
-                        <div style={{ fontSize: "10px", color: "#8a9a8a", textTransform: "uppercase", letterSpacing: "1px" }}>Collected</div>
-                        <div style={{ fontFamily: "monospace", fontSize: "14px", color: team.color }}>{rnd(teamCollected)}</div>
-                      </div>
-                      <div style={{ textAlign: "right" }}>
-                        <div style={{ fontSize: "10px", color: "#8a9a8a", textTransform: "uppercase", letterSpacing: "1px" }}>Fully paid</div>
-                        <div style={{ fontFamily: "monospace", fontSize: "14px", color: team.color }}>{teamFullyPaid} / 10</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Players */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                    {teamPlayers.map(function(player) {
-                      const allPaid = player.payments.every(function(p) { return p.paid; });
-                      const somePaid = player.payments.some(function(p) { return p.paid; });
-                      const playerCollected = player.payments.reduce(function(s, p) { return s + (p.paid && p.amount !== "" ? Number(p.amount) : 0); }, 0);
-                      const playerExpected = player.payments.reduce(function(s, p) { return s + (p.amount !== "" ? Number(p.amount) : 0); }, 0);
-                      const dotColor = allPaid ? "#4ade80" : somePaid ? "#facc15" : "#3a5a3a";
-
-                      return (
-                        <div key={player.id} style={{ background: "#0d1a0d", border: "1px solid " + (allPaid ? team.borderColor : "#2a3a2a"), borderRadius: "10px", padding: "14px 16px" }}>
-                          {/* Name row */}
-                          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
-                            <div style={{ width: "9px", height: "9px", borderRadius: "50%", background: dotColor, flexShrink: 0 }} />
-                            {editName === player.id ? (
-                              <input
-                                autoFocus type="text" defaultValue={player.name}
-                                onBlur={function(e) { renamePlayer(player.id, e.target.value); }}
-                                onKeyDown={function(e) { if (e.key === "Enter") e.target.blur(); }}
-                                style={{ ...IS, fontSize: "14px", flex: 1 }}
-                              />
-                            ) : (
-                              <div onClick={() => setEditName(player.id)} title="Click to rename"
-                                style={{ fontSize: "14px", fontWeight: "bold", color: allPaid ? "#8ade60" : "#c0d8a0", cursor: "text", flex: 1 }}>
-                                {player.name}
-                              </div>
-                            )}
-                            <div style={{ fontFamily: "monospace", fontSize: "12px", color: "#6a8a5a", whiteSpace: "nowrap" }}>
-                              {rnd(playerCollected)} / {playerExpected ? rnd(playerExpected) : "TBC"}
-                            </div>
-                          </div>
-
-                          {/* 3 payment slots */}
-                          <div className="pay-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "8px" }}>
-                            {player.payments.map(function(pay, i) { return (
-                              <div key={i} style={{ background: pay.paid ? "#0a1f0a" : "#0a120a", border: "1px solid " + (pay.paid ? team.borderColor : "#1a2a1a"), borderRadius: "7px", padding: "10px" }}>
-                                <div style={{ fontSize: "10px", color: pay.paid ? team.color : "#6a9a4a", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "8px" }}>
-                                  {payLabels[i]}
-                                </div>
-                                <div style={{ display: "flex", alignItems: "center", gap: "4px", marginBottom: "6px" }}>
-                                  <span style={{ fontSize: "11px", color: "#5a7a5a", fontFamily: "monospace" }}>R</span>
-                                  <input
-                                    type="number"
-                                    value={pay.amount}
-                                    onChange={function(e) { updPayAmt(player.id, i, e.target.value); }}
-                                    style={{ ...IS, padding: "4px 6px", fontSize: "13px" }}
-                                    placeholder="TBC"
-                                  />
-                                </div>
-                                {payDates[i] && (
-                                  <div style={{ fontSize: "10px", color: "#4a6a4a", marginBottom: "6px", fontFamily: "monospace" }}>
-                                    Due: {fmtDate(payDates[i])}
-                                  </div>
-                                )}
-                                <button
-                                  onClick={function() { togglePaid(player.id, i); }}
-                                  style={{
-                                    width: "100%", padding: "6px 0", borderRadius: "5px", cursor: "pointer",
-                                    border: "1px solid " + (pay.paid ? team.color : "#2a4a2a"),
-                                    background: pay.paid ? (team.id === "blue" ? "#1a2a4a" : "#4a1a1a") : "transparent",
-                                    color: pay.paid ? team.color : "#5a7a5a",
-                                    fontSize: "11px", fontFamily: "monospace", transition: "all 0.2s",
-                                  }}
-                                >{pay.paid ? "✓  Paid" : "Mark paid"}</button>
-                              </div>
-                            ); })}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              );
-            })}
-            <p style={{ fontSize: "11px", color: "#4a6a4a", marginTop: "14px" }}>
-              Set labels and due dates at the top. Click a player name to rename. Enter amounts per slot as confirmed.
-            </p>
-          </div>
-        )}
-
-        {/* SUMMARY TAB */}
-        {tab === "summary" && (
-          <div style={{ padding: "24px 0" }}>
-            <div style={{ background: "#0d1a0d", border: "1px solid #2a3a2a", borderRadius: "10px", overflow: "hidden" }}>
-              <div style={{ background: "#142014", padding: "16px 20px", borderBottom: "1px solid #2a3a2a" }}>
-                <span style={{ fontSize: "15px", color: "#c0d8a0" }}>Trip Summary — Nelspruit Golf 2026</span>
-              </div>
-              <div style={{ padding: "20px" }}>
-                <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: "monospace", fontSize: "13px" }}>
-                  <thead>
-                    <tr style={{ color: "#5a7a5a", fontSize: "10px", textTransform: "uppercase", letterSpacing: "1px" }}>
-                      <th style={{ textAlign: "left", padding: "6px 8px", fontWeight: "normal" }}>Category</th>
-                      <th style={{ textAlign: "right", padding: "6px 8px", fontWeight: "normal" }}>Est. pp</th>
-                      <th style={{ textAlign: "right", padding: "6px 8px", fontWeight: "normal" }}>Actual pp</th>
-                      <th style={{ textAlign: "right", padding: "6px 8px", fontWeight: "normal" }}>Group (x20)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {cats.map(function(cat) {
-                      const est = cat.items.reduce((s, i) => s + (i.est || 0), 0);
-                      const act = cat.items.reduce((s, i) => s + effPP(i), 0);
-                      return (
-                        <tr key={cat.id} style={{ borderTop: "1px solid #1a2a1a" }}>
-                          <td style={{ padding: "10px 8px", color: "#a0b890" }}>{cat.icon} {cat.label}</td>
-                          <td style={{ padding: "10px 8px", textAlign: "right", color: "#6a8a5a" }}>{rnd(est)}</td>
-                          <td style={{ padding: "10px 8px", textAlign: "right", color: "#c0d8a0" }}>{rnd(act)}</td>
-                          <td style={{ padding: "10px 8px", textAlign: "right", color: "#8aaa6a" }}>{rnd(act * PEOPLE)}</td>
-                        </tr>
-                      );
-                    })}
-                    <tr style={{ borderTop: "2px solid #3a5a2a" }}>
-                      <td style={{ padding: "14px 8px", color: "#c0d8a0", fontWeight: "bold" }}>TOTAL (excl. flights)</td>
-                      <td style={{ padding: "14px 8px", textAlign: "right", color: "#6a8a5a", fontSize: "15px" }}>{rnd(totalEstPP)}</td>
-                      <td style={{ padding: "14px 8px", textAlign: "right", color: bColor, fontSize: "17px" }}>{rnd(totalPP)}</td>
-                      <td style={{ padding: "14px 8px", textAlign: "right", color: bColor, fontSize: "17px" }}>{rnd(totalPP * PEOPLE)}</td>
-                    </tr>
-                  </tbody>
-                </table>
-
-                <div style={{ marginTop: "20px", padding: "14px 16px", background: "#0a120a", borderRadius: "8px", border: "1px solid #2a3a2a" }}>
-                  <div style={{ fontSize: "11px", color: "#5a7a5a", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "10px" }}>Budget check</div>
-                  {[
-                    { label: "Under R10,000 pp", ok: totalPP < 10000, msg: totalPP < 10000 ? "Within minimum" : "Above minimum" },
-                    { label: "Under R12,000 pp", ok: totalPP <= 12000, msg: totalPP <= 12000 ? "Within maximum" : "Over budget" },
-                    { label: (totalPP <= MAX_PP ? "Headroom" : "Overspend") + " vs R12,000", ok: totalPP <= MAX_PP, msg: "R " + Math.abs(MAX_PP - totalPP).toLocaleString("en-ZA") + " pp" },
-                  ].map(function(c) { return (
-                    <div key={c.label} style={{ display: "flex", justifyContent: "space-between", padding: "6px 0", borderBottom: "1px solid #1a2a1a", fontSize: "13px" }}>
-                      <span style={{ color: "#7a9a6a" }}>{c.label}</span>
-                      <span style={{ color: c.ok ? "#4ade80" : "#f87171" }}>{c.msg}</span>
-                    </div>
-                  ); })}
-                </div>
-
-                <div style={{ marginTop: "16px", padding: "14px 16px", background: "#0a120a", borderRadius: "8px", border: "1px solid #1a3a1a" }}>
-                  <div style={{ fontSize: "11px", color: "#5a7a5a", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "10px" }}>Itinerary</div>
-                  {[
-                    { day: "Wed 21 Oct", plan: "Fly in (MQP) — Game drive" },
-                    { day: "Thu 22 Oct", plan: "White River CC — 10:15 tee-off" },
-                    { day: "Fri 23 Oct",  plan: "Kambaku Golf Club — 11:15 tee-off" },
-                    { day: "Sat 24 Oct",  plan: "Mbombela Golf Club — 11:15 tee-off" },
-                    { day: "Sun 25 Oct",  plan: "Check out — fly home" },
-                  ].map(function(r) { return (
-                    <div key={r.day} style={{ display: "flex", gap: "16px", padding: "6px 0", borderBottom: "1px solid #1a2a1a", fontSize: "13px" }}>
-                      <span style={{ color: "#6a9a4a", fontFamily: "monospace", minWidth: "100px" }}>{r.day}</span>
-                      <span style={{ color: "#a0b890" }}>{r.plan}</span>
-                    </div>
-                  ); })}
-                </div>
-
-                <div style={{ marginTop: "12px", padding: "12px 16px", background: "#0a120a", borderRadius: "8px", border: "1px solid #1a3a1a", fontSize: "12px", color: "#5a7a5a" }}>
-                  <strong style={{ color: "#6a9a5a" }}>Note:</strong> Flights excluded. Each player books their own flights to MQP (Kruger Mpumalanga International).
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-      <div style={{ height: "48px" }} />
+      <div class="budget-bar-track"><div class="budget-bar-fill" id="budget-bar" style="width:0%"></div></div>
+      <div class="budget-bar-marks"><span>R 0</span><span style="color:#7aaa5a">TARGET R10,000 – R12,000</span><span>R 12,000</span></div>
     </div>
-  );
+    <div class="pills">
+      <div class="pill"><div class="pill-label">Spend pp</div><div class="pill-val" id="pill-pp">—</div><div class="pill-sub">actuals where confirmed</div></div>
+      <div class="pill"><div class="pill-label">Group Total</div><div class="pill-val" id="pill-group">—</div><div class="pill-sub">× 20 players</div></div>
+      <div class="pill"><div class="pill-label" id="pill-hw-label">Headroom</div><div class="pill-val" id="pill-hw">—</div><div class="pill-sub">vs R12,000 ceiling</div></div>
+      <div class="pill"><div class="pill-label">Kitty Collected</div><div class="pill-val" id="pill-kitty">—</div><div class="pill-sub" id="pill-kitty-sub">0 of 20 fully paid</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="showTab('budget')">💰 Budget</button>
+    <button class="tab-btn" onclick="showTab('kitty')">🤝 Kitty Tracker</button>
+    <button class="tab-btn" onclick="showTab('summary')">📋 Summary</button>
+  </div>
+
+  <!-- BUDGET TAB -->
+  <div class="tab-content active" id="tab-budget">
+    <div class="section-note">Enter actual costs as confirmed. Estimated figures are the planning baseline.</div>
+    <div id="budget-cats"></div>
+    <div class="grand-total">
+      <div>
+        <div class="gt-label">Total per person (excl. flights)</div>
+        <div class="gt-sub">Actuals used where confirmed</div>
+      </div>
+      <div style="text-align:right">
+        <div class="gt-val" id="grand-pp" style="color:#4ade80">—</div>
+        <div class="gt-group" id="grand-group">Group total: —</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KITTY TAB -->
+  <div class="tab-content" id="tab-kitty">
+    <div class="pay-schedule">
+      <div class="pay-schedule-title">Payment Schedule — set labels and due dates</div>
+      <div class="pay-grid" id="pay-schedule-slots"></div>
+    </div>
+    <div class="progress-grid" id="progress-bars"></div>
+    <div class="kitty-stats">
+      <div class="kstat"><div class="kstat-label">Total Collected</div><div class="kstat-val" id="ks-collected" style="color:#4ade80">R 0</div></div>
+      <div class="kstat"><div class="kstat-label">Total Expected</div><div class="kstat-val" id="ks-expected" style="color:#c0d8a0">R 0</div></div>
+      <div class="kstat"><div class="kstat-label">Outstanding</div><div class="kstat-val" id="ks-outstanding" style="color:#f87171">R 0</div></div>
+      <div class="kstat"><div class="kstat-label">Blue Team Paid</div><div class="kstat-val" id="ks-blue" style="color:#3b82f6">0 / 10</div></div>
+      <div class="kstat"><div class="kstat-label">Red Team Paid</div><div class="kstat-val" id="ks-red" style="color:#ef4444">0 / 10</div></div>
+    </div>
+    <div id="player-list"></div>
+  </div>
+
+  <!-- SUMMARY TAB -->
+  <div class="tab-content" id="tab-summary">
+    <div style="background:#0d1a0d;border:1px solid #2a3a2a;border-radius:10px;overflow:hidden">
+      <div style="background:#142014;padding:14px 18px;border-bottom:1px solid #2a3a2a;font-size:14px;color:#c0d8a0">Trip Summary — Nelspruit Golf 2026</div>
+      <div style="padding:18px">
+        <table class="summary-table">
+          <thead><tr><th>Category</th><th>Est. pp</th><th>Actual pp</th><th>Group (×20)</th></tr></thead>
+          <tbody id="summary-tbody"></tbody>
+          <tfoot><tr class="summary-grand"><td>TOTAL (excl. flights)</td><td id="sum-est" style="color:#6a8a5a"></td><td id="sum-act" style="color:#4ade80;font-size:15px"></td><td id="sum-grp" style="color:#4ade80;font-size:15px"></td></tr></tfoot>
+        </table>
+        <div class="card-block">
+          <div class="card-block-title">Budget Check</div>
+          <div class="check-row"><span style="color:#7a9a6a">Under R10,000 pp</span><span id="chk1"></span></div>
+          <div class="check-row"><span style="color:#7a9a6a">Under R12,000 pp</span><span id="chk2"></span></div>
+          <div class="check-row" style="border:none"><span style="color:#7a9a6a">Headroom vs R12,000 pp</span><span id="chk3"></span></div>
+        </div>
+        <div class="card-block">
+          <div class="card-block-title">Itinerary</div>
+          <div class="itin-row"><span class="itin-day">Wed 21 Oct</span><span class="itin-plan">Fly in (MQP) — Game drive</span></div>
+          <div class="itin-row"><span class="itin-day">Thu 22 Oct</span><span class="itin-plan">White River CC — 10:15 tee-off ✓</span></div>
+          <div class="itin-row"><span class="itin-day">Fri 23 Oct</span><span class="itin-plan">Kambaku Golf Club — 11:15 tee-off ✓</span></div>
+          <div class="itin-row"><span class="itin-day">Sat 24 Oct</span><span class="itin-plan">Mbombela Golf Club — 11:15 tee-off ✓</span></div>
+          <div class="itin-row" style="border:none"><span class="itin-day">Sun 25 Oct</span><span class="itin-plan">Check out — fly home</span></div>
+        </div>
+        <div style="margin-top:12px;font-size:11px;color:#5a7a5a;padding:10px;background:#0a120a;border-radius:6px">
+          <strong style="color:#6a9a5a">Note:</strong> Flights excluded. Each player books their own flights to MQP (Kruger Mpumalanga International).
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="height:48px"></div>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────
+var PEOPLE = 20;
+var MAX_PP = 12000;
+
+var categories = [
+  { id:"accommodation", label:"Accommodation", icon:"🏨", desc:"4 nights | Sabi River Sun", items:[
+    { id:"acc1", label:"Sabi River Sun — 4 nights (Wed–Sun)", est:3200, actual:4794, notes:"CONFIRMED | R95,880 / 20 pax" },
+    { id:"acc2", label:"Deposit / booking fee", est:0, actual:0, notes:"Included in total" },
+  ]},
+  { id:"golf", label:"Golf", icon:"⛳", desc:"3 rounds", items:[
+    { id:"g1", label:"Round 1 — White River CC (Thu 22 Oct) | Green fees", est:460, actual:460, notes:"CONFIRMED | 10:15 tee-off" },
+    { id:"g2", label:"Round 1 — White River CC (Thu 22 Oct) | Cart", est:250, actual:250, notes:"CONFIRMED" },
+    { id:"g3", label:"Round 2 — Kambaku (Fri 23 Oct) | Green fees", est:550, actual:550, notes:"CONFIRMED | 11:15 tee-off" },
+    { id:"g4", label:"Round 2 — Kambaku (Fri 23 Oct) | Cart", est:260, actual:260, notes:"CONFIRMED" },
+    { id:"g5", label:"Round 3 — Mbombela (Sat 24 Oct) | Green fees", est:400, actual:400, notes:"CONFIRMED | 11:15 tee-off" },
+    { id:"g6", label:"Round 3 — Mbombela (Sat 24 Oct) | Cart", est:225, actual:225, notes:"CONFIRMED" },
+  ]},
+  { id:"transport", label:"Ground Transport", icon:"🚌", desc:"Airport transfers + daily movement", items:[
+    { id:"t1", label:"Airport transfers (in & out)", est:400, actual:null, notes:"Bus / shuttle for 20" },
+    { id:"t2", label:"Daily transport to courses", est:600, actual:null, notes:"3 days x bus hire" },
+  ]},
+  { id:"food", label:"Food & Drinks", icon:"🍽️", desc:"Group kitty — 4 days", items:[
+    { id:"f1", label:"Dinners (4 evenings)", est:1000, actual:null, notes:"~R250pp per dinner" },
+    { id:"f2", label:"Breakfast (4 days)", est:400, actual:null, notes:"~R100pp per day" },
+    { id:"f3", label:"Drinks after the round (3 days)", est:500, actual:null, notes:"Est. R500pp" },
+    { id:"f4", label:"Drinks / bar kitty (evenings)", est:2000, actual:null, notes:"Estimate — adjust as needed" },
+  ]},
+  { id:"activities", label:"Activities", icon:"🦁", desc:"Game drive — Wed 21 Oct", items:[
+    { id:"a1", label:"Game drive — guided (Wed 21 Oct)", est:1000, actual:null, notes:"UNDECIDED — reserve & format TBC" },
+  ]},
+  { id:"extras", label:"Extras & Contingency", icon:"🏆", desc:"Kit, contingency", items:[
+    { id:"e1", label:"Team kit — 3 shirts pp (different colour per round)", est:1500, actual:null, notes:"Mid-range est. R500/shirt | supplier TBC" },
+    { id:"e2", label:"Contingency buffer", est:300, actual:null, notes:"~3% buffer — do not remove" },
+  ]},
+];
+
+var payLabels = ["Payment 1","Payment 2","Payment 3"];
+var payDates  = ["2026-05-31","2026-06-30","2026-08-31"];
+
+var teams = [
+  { id:"blue", label:"Blue Team", color:"#3b82f6", dark:"#1e3a5f", border:"#2563eb",
+    players:["Andrew Pretorius","David Snyman","Emil Krugmann","Harry Steyn","Lucas Steyn","Phil Davidson","Phil Wessels","Rentzke Smook","Ryan Theron","Zac van Zyl"] },
+  { id:"red",  label:"Red Team",  color:"#ef4444", dark:"#5f1e1e", border:"#dc2626",
+    players:["Brink van Zyl","Douw Krugmann","Eben Heunis","Francois Wessels","Hennie van Niekerk","Hennie van Staden","Pierre Janse van Rensburg","Tiaan Hatting","Wim de Beer","Wimpie van der Meijden"] },
+];
+
+// Build players array
+var players = [];
+var pid = 1;
+teams.forEach(function(t){
+  t.players.forEach(function(name){
+    players.push({ id:pid++, name:name, team:t.id,
+      payments:[{amount:"4000",paid:false},{amount:"4000",paid:false},{amount:"4000",paid:false}] });
+  });
+});
+
+// ── HELPERS ──────────────────────────────────────────────
+function fmt(n){ return n===null||n===undefined||n===""?"—":"R "+Number(n).toLocaleString("en-ZA"); }
+function eff(item){ return item.actual!==null&&item.actual!==undefined ? item.actual : (item.est||0); }
+function fmtDate(d){
+  if(!d) return null;
+  try{ return new Date(d+"T00:00:00").toLocaleDateString("en-ZA",{day:"numeric",month:"short",year:"numeric"}); }
+  catch(e){ return d; }
+}
+function barColor(pct){ return pct<=85?"#4ade80":pct<=100?"#facc15":"#f87171"; }
+
+// ── TOTALS ───────────────────────────────────────────────
+function totalPP(){
+  return categories.reduce(function(s,c){ return s+c.items.reduce(function(ss,i){ return ss+eff(i); },0); },0);
+}
+function totalEstPP(){
+  return categories.reduce(function(s,c){ return s+c.items.reduce(function(ss,i){ return ss+(i.est||0); },0); },0);
+}
+function kittyCollected(){
+  return players.reduce(function(s,p){ return s+p.payments.reduce(function(ps,pay){ return ps+(pay.paid&&pay.amount!==""?Number(pay.amount):0); },0); },0);
+}
+function kittyExpected(){
+  return players.reduce(function(s,p){ return s+p.payments.reduce(function(ps,pay){ return ps+(pay.amount!==""?Number(pay.amount):0); },0); },0);
+}
+function fullyPaid(teamId){
+  return players.filter(function(p){ return (!teamId||p.team===teamId)&&p.payments.every(function(pay){ return pay.paid; }); }).length;
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+// ── TAB SWITCHING ─────────────────────────────────────────
+function showTab(id){
+  document.querySelectorAll(".tab-content").forEach(function(el){ el.classList.remove("active"); });
+  document.querySelectorAll(".tab-btn").forEach(function(el){ el.classList.remove("active"); });
+  document.getElementById("tab-"+id).classList.add("active");
+  event.target.classList.add("active");
+  updateAll();
+}
+
+// ── UPDATE HEADER ─────────────────────────────────────────
+function updateHeader(){
+  var pp = totalPP();
+  var pct = Math.round((pp/MAX_PP)*100);
+  var col = barColor(pct);
+  document.getElementById("hdr-total").textContent = fmt(pp);
+  document.getElementById("hdr-total").style.color = col;
+  document.getElementById("budget-bar").style.width = Math.min(pct,100)+"%";
+  document.getElementById("budget-bar").style.background = "linear-gradient(90deg,#4ade80,"+col+")";
+  document.getElementById("pill-pp").textContent = fmt(pp);
+  document.getElementById("pill-group").textContent = fmt(pp*PEOPLE);
+  var hw = MAX_PP - pp;
+  document.getElementById("pill-hw-label").textContent = hw>=0?"Headroom":"Over budget";
+  document.getElementById("pill-hw").textContent = fmt(Math.abs(hw)*PEOPLE);
+  document.getElementById("pill-kitty").textContent = fmt(kittyCollected());
+  document.getElementById("pill-kitty-sub").textContent = fullyPaid(null)+" of 20 fully paid";
+}
+
+// ── BUILD BUDGET TAB ──────────────────────────────────────
+function buildBudget(){
+  var wrap = document.getElementById("budget-cats");
+  wrap.innerHTML = "";
+  categories.forEach(function(cat){
+    var catEst = cat.items.reduce(function(s,i){ return s+(i.est||0); },0);
+    var catAct = cat.items.reduce(function(s,i){ return s+eff(i); },0);
+    var div = document.createElement("div");
+    div.className = "cat-block";
+    var rows = cat.items.map(function(item){
+      var disp = eff(item);
+      var confColor = item.actual!==null&&item.actual!==undefined?"#4a7a3a":"#2a3a2a";
+      return '<div class="item-row">'+
+        '<div class="item-label">'+item.label+'</div>'+
+        '<input type="number" value="'+(item.est||"")+'" onchange="updateEst(\''+cat.id+'\',\''+item.id+'\',this.value)" style="text-align:right" />'+
+        '<input type="number" value="'+(item.actual!==null&&item.actual!==undefined?item.actual:"")+'" onchange="updateActual(\''+cat.id+'\',\''+item.id+'\',this.value)" style="text-align:right;border-color:'+confColor+';color:'+(item.actual!==null&&item.actual!==undefined?"#4ade80":"#c0d8a0")+'" placeholder="—" />'+
+        '<div class="item-total">'+(disp?"R "+(disp*20).toLocaleString("en-ZA"):"—")+'</div>'+
+      '</div>';
+    }).join("");
+    div.innerHTML =
+      '<div class="cat-head">'+
+        '<div class="cat-head-left"><span class="cat-icon">'+cat.icon+'</span><span class="cat-name">'+cat.label+'</span><span class="cat-desc">'+cat.desc+'</span></div>'+
+        '<span class="cat-est">'+fmt(catEst)+' <span style="color:#4a6a4a;font-size:10px">est.</span></span>'+
+      '</div>'+
+      '<div class="col-heads"><span>Item</span><span style="text-align:right">Est. (pp)</span><span style="text-align:right">Actual (pp)</span><span style="text-align:right">Total (×20)</span></div>'+
+      rows+
+      '<div class="section-total-row">'+
+        '<div class="st-label">Section Total</div>'+
+        '<div class="st-est">'+fmt(catEst)+'</div>'+
+        '<div class="st-act">'+fmt(catAct)+'</div>'+
+        '<div class="st-total">'+fmt(catAct*20)+'</div>'+
+      '</div>';
+    wrap.appendChild(div);
+  });
+  var pp = totalPP();
+  var col = barColor(Math.round((pp/MAX_PP)*100));
+  document.getElementById("grand-pp").textContent = fmt(pp);
+  document.getElementById("grand-pp").style.color = col;
+  document.getElementById("grand-group").textContent = "Group total: "+fmt(pp*PEOPLE);
+}
+
+function updateEst(catId,itemId,val){
+  categories.forEach(function(c){ if(c.id===catId) c.items.forEach(function(i){ if(i.id===itemId) i.est=val===""?0:Number(val); }); });
+  updateAll();
+}
+function updateActual(catId,itemId,val){
+  categories.forEach(function(c){ if(c.id===catId) c.items.forEach(function(i){ if(i.id===itemId) i.actual=val===""?null:Number(val); }); });
+  updateAll();
+}
+
+// ── BUILD KITTY TAB ───────────────────────────────────────
+function buildPaySchedule(){
+  var wrap = document.getElementById("pay-schedule-slots");
+  wrap.innerHTML = "";
+  [0,1,2].forEach(function(i){
+    var div = document.createElement("div");
+    div.className = "pay-slot";
+    div.innerHTML =
+      '<div class="pay-slot-label-head">Label</div>'+
+      '<input type="text" value="'+payLabels[i]+'" onchange="updatePayLabel('+i+',this.value)" style="color:#8ade60;font-weight:bold;margin-bottom:8px" />'+
+      '<div class="pay-slot-label-head">Due date</div>'+
+      '<input type="date" value="'+payDates[i]+'" onchange="updatePayDate('+i+',this.value)" style="color-scheme:dark" />';
+    wrap.appendChild(div);
+  });
+}
+
+function updatePayLabel(i,val){ payLabels[i]=val; buildProgressBars(); buildPlayerList(); }
+function updatePayDate(i,val){ payDates[i]=val; buildProgressBars(); buildPlayerList(); }
+
+function buildProgressBars(){
+  var wrap = document.getElementById("progress-bars");
+  wrap.innerHTML = "";
+  [0,1,2].forEach(function(i){
+    var paidCount = players.filter(function(p){ return p.payments[i].paid; }).length;
+    var pct = Math.round((paidCount/20)*100);
+    var div = document.createElement("div");
+    div.className = "prog-card";
+    div.innerHTML =
+      '<div class="prog-top"><span class="prog-name">'+payLabels[i]+'</span><span class="prog-count">'+paidCount+'/20</span></div>'+
+      '<div class="prog-track"><div class="prog-fill" style="width:'+pct+'%"></div></div>'+
+      (payDates[i]?'<div class="prog-date">Due: '+fmtDate(payDates[i])+'</div>':"");
+    wrap.appendChild(div);
+  });
+}
+
+function buildKittyStats(){
+  var collected = kittyCollected();
+  var expected = kittyExpected();
+  var outstanding = expected - collected;
+  document.getElementById("ks-collected").textContent = fmt(collected);
+  document.getElementById("ks-expected").textContent = fmt(expected);
+  document.getElementById("ks-outstanding").textContent = fmt(outstanding);
+  document.getElementById("ks-outstanding").style.color = outstanding>0?"#f87171":"#4ade80";
+  document.getElementById("ks-blue").textContent = fullyPaid("blue")+" / 10";
+  document.getElementById("ks-red").textContent = fullyPaid("red")+" / 10";
+}
+
+function buildPlayerList(){
+  var wrap = document.getElementById("player-list");
+  wrap.innerHTML = "";
+  teams.forEach(function(team){
+    var teamPlayers = players.filter(function(p){ return p.team===team.id; });
+    var teamCollected = teamPlayers.reduce(function(s,p){ return s+p.payments.reduce(function(ps,pay){ return ps+(pay.paid&&pay.amount!==""?Number(pay.amount):0); },0); },0);
+    var teamFull = teamPlayers.filter(function(p){ return p.payments.every(function(pay){ return pay.paid; }); }).length;
+    var section = document.createElement("div");
+    section.className = "team-section";
+    var hdr = document.createElement("div");
+    hdr.className = "team-header";
+    hdr.style.background = team.dark;
+    hdr.style.border = "1px solid "+team.border;
+    hdr.innerHTML =
+      '<div class="team-header-left"><div class="team-dot" style="background:'+team.color+'"></div><span class="team-name-label" style="color:'+team.color+'">'+team.label+'</span></div>'+
+      '<div class="team-stats">'+
+        '<div class="tstat"><div class="tstat-label">Collected</div><div class="tstat-val" style="color:'+team.color+'">'+fmt(teamCollected)+'</div></div>'+
+        '<div class="tstat"><div class="tstat-label">Fully paid</div><div class="tstat-val" style="color:'+team.color+'">'+teamFull+' / 10</div></div>'+
+      '</div>';
+    section.appendChild(hdr);
+    teamPlayers.forEach(function(player){
+      var allPaid = player.payments.every(function(p){ return p.paid; });
+      var somePaid = player.payments.some(function(p){ return p.paid; });
+      var dotColor = allPaid?"#4ade80":somePaid?"#facc15":"#3a5a3a";
+      var pCollected = player.payments.reduce(function(s,pay){ return s+(pay.paid&&pay.amount!==""?Number(pay.amount):0); },0);
+      var pExpected = player.payments.reduce(function(s,pay){ return s+(pay.amount!==""?Number(pay.amount):0); },0);
+      var card = document.createElement("div");
+      card.className = "player-card";
+      if(allPaid) card.style.borderColor = team.border;
+      var slots = player.payments.map(function(pay,i){
+        var bgColor = pay.paid?"#0a1f0a":"#0a120a";
+        var borderColor = pay.paid?team.border:"#1a2a1a";
+        var btnBg = pay.paid?(team.id==="blue"?"#1a2a4a":"#4a1a1a"):"transparent";
+        var btnColor = pay.paid?team.color:"#5a7a5a";
+        var btnBorder = pay.paid?team.color:"#2a4a2a";
+        var btnText = pay.paid?"✓  Paid":"Mark paid";
+        return '<div class="pay-card" style="background:'+bgColor+';border:1px solid '+borderColor+'">'+
+          '<div class="pay-card-label" style="color:'+(pay.paid?team.color:"#6a9a4a")+'">'+payLabels[i]+'</div>'+
+          '<div class="pay-card-amount" style="color:#c0d8a0">'+fmt(pay.amount!==""?Number(pay.amount):null)+'</div>'+
+          (payDates[i]?'<div class="pay-card-date">Due: '+fmtDate(payDates[i])+'</div>':"")+
+          '<button class="mark-paid-btn" onclick="togglePaid('+player.id+','+i+')" style="border:1px solid '+btnBorder+';background:'+btnBg+';color:'+btnColor+'">'+btnText+'</button>'+
+        '</div>';
+      }).join("");
+      card.innerHTML =
+        '<div class="player-top">'+
+          '<div class="player-dot" style="background:'+dotColor+'"></div>'+
+          '<div class="player-name">'+player.name+'</div>'+
+          '<div class="player-collected">'+fmt(pCollected)+' / '+fmt(pExpected)+'</div>'+
+        '</div>'+
+        '<div class="payment-slots">'+slots+'</div>';
+      section.appendChild(card);
+    });
+    wrap.appendChild(section);
+  });
+}
+
+function togglePaid(playerId,payIdx){
+  players.forEach(function(p){ if(p.id===playerId) p.payments[payIdx].paid=!p.payments[payIdx].paid; });
+  buildProgressBars(); buildKittyStats(); buildPlayerList(); updateHeader();
+}
+
+// ── BUILD SUMMARY TAB ─────────────────────────────────────
+function buildSummary(){
+  var tbody = document.getElementById("summary-tbody");
+  tbody.innerHTML = "";
+  var totEst = 0, totAct = 0;
+  categories.forEach(function(cat){
+    var est = cat.items.reduce(function(s,i){ return s+(i.est||0); },0);
+    var act = cat.items.reduce(function(s,i){ return s+eff(i); },0);
+    totEst+=est; totAct+=act;
+    var tr = document.createElement("tr");
+    tr.innerHTML = '<td>'+cat.icon+' '+cat.label+'</td><td style="color:#6a8a5a">'+fmt(est)+'</td><td style="color:#c0d8a0">'+fmt(act)+'</td><td style="color:#8aaa6a">'+fmt(act*PEOPLE)+'</td>';
+    tbody.appendChild(tr);
+  });
+  var col = barColor(Math.round((totAct/MAX_PP)*100));
+  document.getElementById("sum-est").textContent = fmt(totEst);
+  document.getElementById("sum-act").textContent = fmt(totAct);
+  document.getElementById("sum-act").style.color = col;
+  document.getElementById("sum-grp").textContent = fmt(totAct*PEOPLE);
+  document.getElementById("sum-grp").style.color = col;
+  // Budget checks
+  document.getElementById("chk1").textContent = totAct<10000?"✓ Within minimum":"× Above minimum";
+  document.getElementById("chk1").style.color = totAct<10000?"#4ade80":"#f87171";
+  document.getElementById("chk2").textContent = totAct<=12000?"✓ Within maximum":"× Over budget";
+  document.getElementById("chk2").style.color = totAct<=12000?"#4ade80":"#f87171";
+  var hw = 12000-totAct;
+  document.getElementById("chk3").textContent = fmt(Math.abs(hw))+" pp "+(hw>=0?"remaining":"over");
+  document.getElementById("chk3").style.color = hw>=0?"#4ade80":"#f87171";
+}
+
+// ── MASTER UPDATE ─────────────────────────────────────────
+function updateAll(){
+  updateHeader();
+  buildBudget();
+  buildProgressBars();
+  buildKittyStats();
+  buildPlayerList();
+  buildSummary();
+}
+
+// ── INIT ──────────────────────────────────────────────────
+buildPaySchedule();
+updateAll();
 </script>
 </body>
 </html>
